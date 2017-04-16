@@ -48,7 +48,6 @@ public final class QuoteSyncJob {
     }
 
     static void getQuotes(final Context context) {
-        Log.e("quoteSyncJob", "getQuotes demaré");
         Timber.d("Running sync job");
 
         Calendar from = Calendar.getInstance();
@@ -116,9 +115,6 @@ public final class QuoteSyncJob {
                    // When a stock symbol does not existe, it handles a null pointer exeption
                     // If a null pointer exeption is handled, the symbol is removed from shared preferences
                     // And iterator moves to next in order to read the next stock
-                   Log.e("pp", "exeption levee");
-
-
 
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         public void run() {
@@ -138,7 +134,6 @@ public final class QuoteSyncJob {
 
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
             context.sendBroadcast(dataUpdatedIntent);
-            Log.e("QuoteSyncJob", "widget averti dune maj des données");
 
 
         } catch (IOException exception) {

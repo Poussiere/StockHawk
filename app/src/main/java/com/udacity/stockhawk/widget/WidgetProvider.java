@@ -27,7 +27,6 @@ public class WidgetProvider extends AppWidgetProvider {
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        Log.e("widgetProvider", "onUpdate lancé");
 
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
@@ -38,10 +37,6 @@ public class WidgetProvider extends AppWidgetProvider {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             views.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
-            //We cretate an intent to update datas when clicked on update button
-            Intent intent2 = new Intent(context, QuoteJobService.class);
-            PendingIntent pendingIntent2 = PendingIntent.getService(context, 0, intent2, 0);
-            views.setOnClickPendingIntent(R.id.update_button, pendingIntent2);
 
 
 
@@ -66,7 +61,6 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (QuoteSyncJob.ACTION_DATA_UPDATED.equals(intent.getAction())) {
-            Log.i("WidgetProvider","message recu!");
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
