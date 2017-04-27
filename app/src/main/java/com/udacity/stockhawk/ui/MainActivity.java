@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onClick(String symbol) {
         Timber.d("Symbol clicked: %s", symbol);
-        Intent i = new Intent (MainActivity.this, EvoActivity.class);
+        Intent i = new Intent(MainActivity.this, EvoActivity.class);
         i.putExtra(EXTRA_SYMBOL_KEY, symbol);
         startActivity(i);
     }
@@ -85,12 +85,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
-                PrefUtils.removeStock(MainActivity.this, symbol);
-                getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
 
-                //Update the widget
-                Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
-                getApplicationContext().sendBroadcast(dataUpdatedIntent);
+
+                // if the swiped symbol is one of the defaults, it wont be deleted
+                String appleSymbol = getResources().getString(R.string.default_stocks_apple);
+                String faceBookSymbol = getResources().getString(R.string.default_stocks_facebook);
+                String microsoftSymbol = getResources().getString(R.string.default_stocks_microsoft);
+                String yahooSymbol = getResources().getString(R.string.default_stocks_yahoo);
+                if (symbol.equals(appleSymbol) || symbol.equals(faceBookSymbol) || symbol.equals(microsoftSymbol) || symbol.equals(yahooSymbol)) {
+                    Toast.makeText(getApplicationContext(), R.string.toast_dont_delete_default_stocks, Toast.LENGTH_LONG).show();
+                    adapter.notifyDataSetChanged();
+                } else {
+                    PrefUtils.removeStock(MainActivity.this, symbol);
+                    getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
+
+                    //Update the widget
+                    Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
+                    getApplicationContext().sendBroadcast(dataUpdatedIntent);
+                }
             }
         }).attachToRecyclerView(stockRecyclerView);
 
@@ -164,6 +176,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.GONE);
         }
         adapter.setCursor(data);
+
+
     }
 
 

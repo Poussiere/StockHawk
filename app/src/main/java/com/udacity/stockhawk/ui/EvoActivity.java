@@ -13,16 +13,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
@@ -31,9 +28,6 @@ import com.udacity.stockhawk.utils.XAxisValueFormater;
 import com.udacity.stockhawk.utils.YAxisValueFormater;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class EvoActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -42,13 +36,13 @@ public class EvoActivity extends AppCompatActivity implements LoaderManager.Load
 
 
     // A URI to request quote (and history of quotes) of a unique stock
-   private Uri uniqueStockRequest ;
+    private Uri uniqueStockRequest;
 
     // The symbol of the stock that is requested by user
-   private String symbol;
+    private String symbol;
 
     //String [] for the projection in order to request only history column of the database
-    private String [] projection = {Contract.Quote.COLUMN_HISTORY};
+    private String[] projection = {Contract.Quote.COLUMN_HISTORY};
 
     //A Stirng to retrieve history from the cursor
     private String stringHistory;
@@ -67,17 +61,16 @@ public class EvoActivity extends AppCompatActivity implements LoaderManager.Load
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-        mLineChart=(LineChart)findViewById(R.id.line_chart);
+        mLineChart = (LineChart) findViewById(R.id.line_chart);
         mLineChart.setScaleEnabled(true);
         mLineChart.setPinchZoom(true);
         mLineChart.getDescription().setEnabled(false);
         mLineChart.setBackgroundColor(Color.WHITE);
 
 
-
         XAxis xAxis = mLineChart.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
-        XAxisValueFormater xFormater=new XAxisValueFormater();
+        XAxisValueFormater xFormater = new XAxisValueFormater();
         xAxis.setValueFormatter(xFormater);
 
 
@@ -86,13 +79,11 @@ public class EvoActivity extends AppCompatActivity implements LoaderManager.Load
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
 
         //format the y values to draw a $ symbol after each price
-        YAxisValueFormater yFormater=new YAxisValueFormater();
+        YAxisValueFormater yFormater = new YAxisValueFormater();
         leftAxis.setValueFormatter(yFormater);
 
 
         mLineChart.animateX(2500);
-
-
 
 
         mLineChart.getAxisRight().setEnabled(false);
@@ -105,7 +96,6 @@ public class EvoActivity extends AppCompatActivity implements LoaderManager.Load
 
         //iniate the loader
         getSupportLoaderManager().initLoader(STOCK_HISTORY_LOADER, null, this);
-
 
 
     }
@@ -122,8 +112,7 @@ public class EvoActivity extends AppCompatActivity implements LoaderManager.Load
 
         if (data.moveToFirst()) {
             stringHistory = data.getString(0);
-
-            List <Entry> valList= GraphsUtils.fromStringToEntryList(stringHistory);
+            List<Entry> valList = GraphsUtils.fromStringToEntryList(stringHistory);
             LineDataSet line1 = new LineDataSet(valList, symbol);
             line1.setAxisDependency(YAxis.AxisDependency.LEFT);
             List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -137,8 +126,6 @@ public class EvoActivity extends AppCompatActivity implements LoaderManager.Load
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
-
-
 
 
     @Override

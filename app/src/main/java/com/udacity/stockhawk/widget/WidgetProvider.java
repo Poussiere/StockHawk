@@ -10,18 +10,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.udacity.stockhawk.R;
-import com.udacity.stockhawk.sync.QuoteJobService;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 import com.udacity.stockhawk.ui.EvoActivity;
 import com.udacity.stockhawk.ui.MainActivity;
 
-/**
- * Created by poussiere on 10/04/17.
- */
 
 public class WidgetProvider extends AppWidgetProvider {
 
@@ -36,8 +31,6 @@ public class WidgetProvider extends AppWidgetProvider {
             Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             views.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
-
-
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -81,6 +74,6 @@ public class WidgetProvider extends AppWidgetProvider {
                 new Intent(context, WidgetRemoteViewsService.class));
     }
 
-    }
+}
 
 

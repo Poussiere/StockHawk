@@ -32,12 +32,15 @@
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="toast_stock_doesnt_exist">This symbol is unknown</string>
+    <string name="toast_dont_delete_default_stocks">This is a default stock. You can not delete it.</string>
     <string name="widget_label">All your quotes!</string>
     <string name="empty_widget_list">No quotes to display</string>
 
     <string name="fab_content_description">Add a stock</string>
     <string name="switch_dollars">Click to see evolution in percents</string>
     <string name="switch_percents">Click to see evolution in absolute values</string>
+
+
 
 
 

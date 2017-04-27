@@ -5,9 +5,6 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.text.DecimalFormat;
 
-/**
- * Created by poussiere on 09/04/17.
- */
 
 public class YAxisValueFormater implements IAxisValueFormatter {
 
@@ -22,6 +19,6 @@ public class YAxisValueFormater implements IAxisValueFormatter {
 
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        return mFormat.format(value)+" $";
+        return mFormat.format(value) + " $";
     }
 }

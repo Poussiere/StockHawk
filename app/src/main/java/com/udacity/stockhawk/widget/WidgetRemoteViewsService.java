@@ -3,7 +3,6 @@ package com.udacity.stockhawk.widget;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
-import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -16,9 +15,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-/**
- * Created by poussiere on 10/04/17.
- */
 
 public class WidgetRemoteViewsService extends RemoteViewsService {
     @Override
@@ -26,11 +22,13 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
 
         return new RemoteViewsFactory() {
-            private Cursor data=null;
+            private Cursor data = null;
             private DecimalFormat dollarFormat;
             private DecimalFormat percentageFormat;
+
             @Override
             public void onCreate() {
+
 
                 dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
                 percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
@@ -38,16 +36,21 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
                 percentageFormat.setMinimumFractionDigits(2);
                 percentageFormat.setPositivePrefix("+");
 
+                // QuoteSyncJob.initialize(getApplicationContext());
+
             }
 
             @Override
             public void onDataSetChanged() {
 
-            if(data!=null){
-                data.close();}
+
+                if (data != null) {
+                    data.close();
+                }
+
 
                 final long identityToken = Binder.clearCallingIdentity();
-                data=getContentResolver().query(Contract.Quote.URI,
+                data = getContentResolver().query(Contract.Quote.URI,
                         Contract.Quote.QUOTE_COLUMNS.toArray(new String[]{}),
                         null, null, Contract.Quote.COLUMN_SYMBOL);
 
@@ -67,13 +70,12 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             @Override
             public int getCount() {
-                if (data==null){
-                    return 0;}
-
-                    else {
-                        return data.getCount();
-                    }
+                if (data == null) {
+                    return 0;
+                } else {
+                    return data.getCount();
                 }
+            }
 
 
             @Override
@@ -88,18 +90,15 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
                 String symbol = data.getString(Contract.Quote.POSITION_SYMBOL);
                 String price = dollarFormat.format(data.getFloat(Contract.Quote.POSITION_PRICE));
-                float percentageChange=data.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
-
+                float percentageChange = data.getFloat(Contract.Quote.POSITION_PERCENTAGE_CHANGE);
 
 
                 String percentage = percentageFormat.format(percentageChange / 100);
 
 
-
                 views.setTextViewText(R.id.widget_symbol, symbol);
                 views.setTextViewText(R.id.widget_price, price);
                 views.setTextViewText(R.id.widget_change, percentage);
-
 
 
                 //The intent to launch evoActivity
@@ -121,6 +120,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             @Override
             public int getViewTypeCount() {
+
                 return 1;
             }
 
@@ -133,6 +133,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             @Override
             public boolean hasStableIds() {
+
                 return true;
             }
         };
