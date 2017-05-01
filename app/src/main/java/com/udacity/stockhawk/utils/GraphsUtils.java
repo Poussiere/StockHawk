@@ -29,11 +29,17 @@ public class GraphsUtils {
 
         {
             //We split each line in order to retrieve x and y values
+
+
             lineSplit = lines[i].split(", ");
-            x = Float.valueOf(lineSplit[0]);
-            y = Float.valueOf(lineSplit[1]);
-            tempEntry = new Entry(x, y);
-            graphValList.add(tempEntry);
+
+            if (null!=lineSplit) {
+
+                x = Float.valueOf(lineSplit[0]);
+                y = Float.valueOf(lineSplit[1]);
+                tempEntry = new Entry(x, y);
+                graphValList.add(tempEntry);
+            }
         }
 
         Collections.reverse(graphValList);
