@@ -29,9 +29,7 @@ public class GraphsUtils {
 
         {
             //We split each line in order to retrieve x and y values
-            Log.e("graph utils", lines[i]);
             lineSplit = lines[i].split(", ");
-            Log.e("graphUtils", lineSplit[0]);
             x = Float.valueOf(lineSplit[0]);
             y = Float.valueOf(lineSplit[1]);
             tempEntry = new Entry(x, y);
